@@ -36,3 +36,7 @@ content2.appendChild(para2);
 
 container.appendChild(content2);
 
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function (e) {
+  e.target.style.background = 'blue';
+});
