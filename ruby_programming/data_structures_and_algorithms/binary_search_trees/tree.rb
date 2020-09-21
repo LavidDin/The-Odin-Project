@@ -43,7 +43,6 @@ class Tree
     is_left ? parent_node.left = Node.new(value) : parent_node.right = Node.new(value)
   end
 
-
   def delete(value, parent_node = root, pointer = root)
     return if find(value).nil? #value to be deleted not found
 
@@ -51,8 +50,7 @@ class Tree
     i = 0
     loop do
       if value < parent_node.value
-        pointer = parent_node.left #if parent_node.left != nil
-        #puts "#{parent_node.value} and #{pointer.value}"
+        pointer = parent_node.left
         
         if pointer.value == value 
           is_left = true
@@ -62,9 +60,8 @@ class Tree
         end
 
       else
-        pointer = parent_node.right #if parent_node.right != nil
-        
-        #puts "#{parent_node.value} and #{pointer.value}"
+        pointer = parent_node.right
+
         if pointer.value == value 
           is_left = false
           i = 1 
@@ -72,8 +69,9 @@ class Tree
           return delete(value, pointer, pointer.right)
         end
       end
-      break if i == 1
-    end
+
+        break if i == 1
+      end
 
     if pointer.left.nil? && pointer.right.nil?
       if is_left
@@ -106,9 +104,10 @@ class Tree
       end
     end
 
-    return #"end of #{parent_node.value} and #{pointer.value}"
+    return "Deleted #{value} from the tree"
   end
 
+  #returns the smallest node child for a given parent node
   def min_value_node(node)
     current = node
 
@@ -134,6 +133,30 @@ class Tree
     return nil
   end
 
+  def level_order
+    node_array = [[root.value]]
+    parents = [root]
+
+    until parents.empty?
+      sub_array = []
+      new_parents = []
+      parents.each do |parent|
+        if parent.left != nil
+          sub_array << parent.left.value
+          new_parents << parent.left
+        end
+
+        if parent.right != nil
+          sub_array << parent.right.value
+          new_parents << parent.right
+        end
+      end
+
+      parents = new_parents
+      node_array << sub_array if !sub_array.empty?
+    end
+    return node_array
+  end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -151,14 +174,14 @@ arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(arr)
 p tree.pretty_print
 
-#tree.insert(2)
 #tree.insert(6)
 #p tree.pretty_print
 
-#p tree.find(2)
-#p tree.delete(3)
-p tree.delete(9)
+=begin
+p tree.find(2)
+p tree.delete(67)
+p tree.delete(4)
 p tree.pretty_print
-#p tree.delete(10)
-#p tree.delete 2
-
+p tree.delete(10)
+=end
+p tree.level_order
