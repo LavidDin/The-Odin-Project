@@ -145,7 +145,6 @@ class Tree
           sub_array << parent.left.value
           new_parents << parent.left
         end
-
         if parent.right != nil
           sub_array << parent.right.value
           new_parents << parent.right
@@ -155,8 +154,38 @@ class Tree
       parents = new_parents
       node_array << sub_array if !sub_array.empty?
     end
+
     return node_array
   end
+
+  def preorder(node = @root, array = [])
+    array.push(node.value)
+    preorder(node.left, array) unless node.left.nil?
+    preorder(node.right, array) unless node.right.nil?
+
+    array
+  end
+
+
+  def inorder(node = @root, array = [])
+    inorder(node.left, array) unless node.left.nil?
+    array.push(node.value)
+    inorder(node.right, array) unless node.right.nil?
+
+    array
+  end
+
+
+  def postorder(node = @root, array = [])
+    postorder(node.left, array) unless node.left.nil?
+    postorder(node.right, array) unless node.right.nil?
+    array.push(node.value)
+
+    array
+  end
+
+
+
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -185,3 +214,8 @@ p tree.pretty_print
 p tree.delete(10)
 =end
 p tree.level_order
+
+
+p tree.preorder
+p tree.inorder
+p tree.postorder
