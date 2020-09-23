@@ -1,3 +1,7 @@
+Node = Struct.new(:value, :left, :right) do
+
+end
+
 class Tree
   attr_reader :root
 
@@ -129,7 +133,6 @@ class Tree
         pointer = pointer.right
       end
     end
-    p "Unable to locate the node: #{value}"
     return nil
   end
 
@@ -166,7 +169,6 @@ class Tree
     array
   end
 
-
   def inorder(node = @root, array = [])
     inorder(node.left, array) unless node.left.nil?
     array.push(node.value)
@@ -174,7 +176,6 @@ class Tree
 
     array
   end
-
 
   def postorder(node = @root, array = [])
     postorder(node.left, array) unless node.left.nil?
@@ -184,8 +185,40 @@ class Tree
     array
   end
 
+  def height(node)
+    return -1 if node.nil?
+    
+    left_height = height(node.left)
+    right_height = height(node.right)
 
+    left_height >= right_height ? left_height + 1 : right_height + 1
+  end
 
+  def depth(node)
+    pointer = root
+    depth_number = 0
+
+    until pointer.nil? || node == pointer
+      if node < pointer
+        pointer = pointer.left
+      else
+        pointer = pointer.right
+      end
+      depth_number += 1
+    end
+
+    pointer.nil? ? -1 : depth_number
+  end
+
+  def balanced?(node = @root)
+    ((self.height(node.left) - self.height(node.right)).abs <= 1) && 
+        (node.left.nil? ? true : self.balanced?(node.left)) && 
+        (node.right.nil? ? true : self.balanced?(node.right))
+  end
+
+  def rebalance
+    @root = build_tree(self.level_order.flatten)
+  end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -195,27 +228,53 @@ class Tree
 
 end
 
+#Testing functions
+def tree_traversals(tree)
+  puts "Tree traversals:"
+  print "  Level Order: "
+  p tree.level_order
+  puts ""
+  
+  print "  Preorder: "
+  p tree.preorder
+  puts ""
+  
+  print "  Inorder: "
+  p tree.inorder
+  puts ""
+  
+  print "  Postorder: "
+  p tree.postorder
 
+  puts ""
+end
 
-
-arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-
+#create tree and print
+p "Creating a balanced binary tree..."
+puts ''
+arr = Array.new(15) { rand(1..100) }
 tree = Tree.new(arr)
-p tree.pretty_print
-
-#tree.insert(6)
-#p tree.pretty_print
-
-=begin
-p tree.find(2)
-p tree.delete(67)
-p tree.delete(4)
-p tree.pretty_print
-p tree.delete(10)
-=end
 p tree.level_order
+tree.pretty_print
+puts ''
+tree_traversals(tree)
+puts ''
 
+#unbalancing the tree
+puts "Unbalancing the tree by inserting 5 elements"
+5.times { tree.insert(rand(1..200))}
+puts ''
+p tree.level_order
+tree.pretty_print
+puts ''
+tree_traversals(tree)
+puts ''
 
-p tree.preorder
-p tree.inorder
-p tree.postorder
+#rebalancing the tree
+p "Rebalancing the tree"
+puts ''
+p tree.level_order
+tree.rebalance
+tree.pretty_print
+puts ''
+tree_traversals(tree)
