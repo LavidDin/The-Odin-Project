@@ -1,0 +1,57 @@
+#logo {
+  display: block;
+  text-align: center;
+  width: 20%;
+  margin: auto;
+  position: fixed;
+  top: 30%;
+  left: 40vw;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  float: right;
+  padding: 10px 10px;
+}
+
+#search {
+  margin: 10px;
+  position: fixed;
+  top: 43%;
+  right: 35vw;
+  width: 500px;
+  padding: 10px 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 25px;
+}
+#buttons {
+  display: block;
+  position: fixed;
+  width: 20%;
+  text-align: center;
+  right: 40%;
+  top: 50%;
+}
+
+.bottom-navbar {
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgrey;
+}
+
+.bottom-navbar-left {
+  float: left;
+  text-align: center;
+}
+.bottom-navbar-right {
+  float: right;
+  text-align: center;
+  padding-right: 20px;
+}
