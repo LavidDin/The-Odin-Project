@@ -19,6 +19,13 @@ class Board
     false
   end
 
+  def empty_board?
+    0.upto(6).any? do |col|
+      return true if empty_col?(col) 
+    end
+    false
+  end
+
   def win_col?(mark)
     6.downto(0).each do |col|
       return true if 5.downto(2).all? { |row| @grid[row][col] == mark }
@@ -54,6 +61,9 @@ class Board
     left_diagonals || right_diagonals
   end
 
+  def win?(mark)
+    win_col?(mark) || win_row?(mark) || win_diagonal?(mark)
+  end
 
   def print
     puts "       1     2     3     4     5     6     7
@@ -76,12 +86,4 @@ class Board
     |  #{@grid[5][0]}  |  #{@grid[5][1]}  |  #{@grid[5][2]}  |  #{@grid[5][3]}  |  #{@grid[5][4]}  |  #{@grid[5][5]}  |  #{@grid[5][6]}  |
     |_____|_____|_____|_____|_____|_____|_____|"
   end
-
 end
-
-
-=begin
-symbols:
-● 
-○
-=end
