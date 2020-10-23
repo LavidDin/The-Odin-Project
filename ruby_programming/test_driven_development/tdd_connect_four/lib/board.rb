@@ -54,7 +54,7 @@ class Board
     end
 
     (3..5).each do |row|
-      6.downto(3).each { |col| right_diagonals = true if @grid[row][col] == mark && @grid[row-1][col-1] == mark && @grid[row-2][col-2] && @grid[row-3][col-3] == mark }
+      6.downto(3).each { |col| right_diagonals = true if @grid[row][col] == mark && @grid[row-1][col-1] == mark && @grid[row-2][col-2] == mark && @grid[row-3][col-3] == mark }
     end
 
     left_diagonals || right_diagonals

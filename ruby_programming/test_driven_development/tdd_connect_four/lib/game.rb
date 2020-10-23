@@ -55,12 +55,9 @@ class Game
       switch_turn
       @board.print
     end
-
+    puts `clear`
     @board.print
     puts 'Game Over'
     puts 'DRAW'
   end
 end
-
-#g = Game.new
-#g.play
