@@ -48,14 +48,13 @@ class Board
   def win_diagonal?(mark)
     left_diagonals = false
     right_diagonals = false
-    reversed = @grid.reverse
 
     (3..5).each do |row|
       (0..3).each { |col| left_diagonals = true if @grid[row][col] == mark && @grid[row-1][col+1] == mark && @grid[row-2][col+2] && @grid[row-3][col+3] == mark }
     end
 
     (3..5).each do |row|
-      (0..3).each { |col| left_diagonals = true if reversed[row][col] == mark && reversed[row-1][col+1] == mark && reversed[row-2][col+2] && reversed[row-3][col+3] == mark }
+      6.downto(3).each { |col| right_diagonals = true if @grid[row][col] == mark && @grid[row-1][col-1] == mark && @grid[row-2][col-2] && @grid[row-3][col-3] == mark }
     end
 
     left_diagonals || right_diagonals

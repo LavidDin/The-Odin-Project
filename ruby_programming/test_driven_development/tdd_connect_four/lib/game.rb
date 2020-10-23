@@ -26,7 +26,7 @@ class Game
     col
   end
 
-  def play
+  def play    
     puts "Welcome to Connect Four"
     puts "Instructions:"
     puts "1) Players will take turns entering a column on the board"
@@ -34,7 +34,7 @@ class Game
     puts ""
     @board.print
     while @board.empty_board?
-      puts "It is now #{@current_player}' turn."
+      puts "It is now #{@current_player}'s turn."
       col = get_position
 
       while @board.empty_col?(col) == false
@@ -45,12 +45,13 @@ class Game
       @board.place_mark(col, @current_player)
 
       if @board.win?(@current_player)
+        puts `clear`
         @board.print
         puts 'Game Over'
         puts @current_player + ' HAS WON!'
         return
       end
-
+      puts `clear`
       switch_turn
       @board.print
     end
